@@ -105,6 +105,23 @@ Stream /: Join[Stream[nexta_, sa0_], Stream[nextb_, sb0_]] :=
 		Stream[next, left[sa0]]
 	]
 
+Stream /: SZip[Stream[nexta_, sa0_], Stream[nextb_, sb0_]] :=
+	Module[{next, left, right, nothing, just},
+		next[{sa_, sb_, nothing}], sb_, nothing] := Module[{inext},
+			inext[Done] = SSkip[right[sb0]];
+			inext[SSkip[sap_]] = SSkip[{sap, sb, nothing]};
+			inext[Yield[x_, sap_]] = SSkip[{sap, sb, just[a]}];
+			inext[nexta[sa]]
+		];
+		next[{sap_, sb_, just[a_]}] := Module[{inext},
+			inext[Done] = Done;
+			inext[SSkip[sbp_]] = SSkip[{sap, sbp, just[a]}];
+			inext[Yield[x_, sbp_]] = Yield[{a, x}, {sap, sbp, nothing}];
+			inext[nextb[sb]]
+		];
+		Stream[next, {sa0, sb0, nothing}]
+	]
+
 End[]
 
 EndPackage[]
