@@ -110,7 +110,7 @@ Stream /: SZip[Stream[nexta_, sa0_], Stream[nextb_, sb0_]] :=
 		next[{sa_, sb_, nothing}], sb_, nothing] := Module[{inext},
 			inext[Done] = SSkip[right[sb0]];
 			inext[SSkip[sap_]] = SSkip[{sap, sb, nothing]};
-			inext[Yield[x_, sap_]] = SSkip[{sap, sb, just[a]}];
+			inext[Yield[x_, sap_]] = SS kip[{sap, sb, just[a]}];
 			inext[nexta[sa]]
 		];
 		next[{sap_, sb_, just[a_]}] := Module[{inext},
